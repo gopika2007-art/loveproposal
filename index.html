@@ -5,13 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Only For You ❤️</title>
 
-<!-- WhatsApp / Social Preview -->
-<meta property="og:title" content="Only For You ❤️">
-<meta property="og:description" content="A small surprise filled with love, hearts and forever 💖">
-<meta property="og:image" content="https://YOUR-USERNAME.github.io/love-proposal/images/preview.jpg">
-<meta property="og:url" content="https://YOUR-USERNAME.github.io/love-proposal/">
-<meta property="og:type" content="website">
-
 <style>
 body {
   margin: 0;
@@ -48,14 +41,17 @@ body {
   text-align: center;
   max-width: 360px;
   box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-  opacity: 1;
-  transform: translateX(0);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
 .card.hide {
   opacity: 0;
   transform: translateX(-40px);
+}
+
+.card.show {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 h1 { color: #ff4d6d; }
@@ -77,7 +73,7 @@ button {
   color: white;
 }
 
-/* Floating hearts */
+/* Hearts */
 .hearts span {
   position: absolute;
   bottom: -20px;
@@ -125,19 +121,7 @@ button {
   to { transform: scale(2); opacity: 0; }
 }
 
-/* Confetti */
-.confetti {
-  position: fixed;
-  top: -10px;
-  font-size: 20px;
-  animation: confettiFall 3s linear forwards;
-}
-
-@keyframes confettiFall {
-  to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-}
-
-/* Final image */
+/* Final Image */
 .final-image {
   width: 220px;
   margin-top: 15px;
@@ -151,6 +135,7 @@ button {
   to { transform: scale(1); opacity: 1; }
 }
 
+/* Forever Text */
 .forever-text {
   font-size: 22px;
   color: #ff4d6d;
@@ -173,44 +158,59 @@ button {
 
 <body>
 
-<!-- Start Screen -->
+<!-- START SCREEN -->
 <div id="startScreen">
   💖<br><br>
   Tap to Begin<br>
   Our Love Story 💍
 </div>
 
-<!-- Background Music -->
-<audio id="bgMusic" loop preload="auto" muted>
-  <source src="audio/remo-bgm.mp3" type="audio/mpeg">
+<!-- MUSIC -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="./audio/remo-bgm.mp3" type="audio/mpeg">
 </audio>
 
-<div class="card" id="card"></div>
+<div class="card show" id="card"></div>
 <div class="hearts" id="hearts"></div>
 
 <script>
 let page = 0;
 
 const pages = [
-`<h1>Hello My Love ❤️</h1>
-<p>Indha page open pannina second-la,<br>en heart full-aa un peru thaan 💖</p>
+`<h1>Hello my Love ❤️</h1>
+<p>
+Indha page open pannina second-la,<br>
+en heart full-aa un peru thaan 💖
+</p>
 <button onclick="nextPage()">Next 💕</button>`,
 
 `<h1>You Are My Peace 🌍</h1>
-<p>Nee sirikkum podhu,<br>en worries ellam marandhu pogudhu 😌</p>
+<p>
+Nee sirikkum podhu,<br>
+en worries ellam marandhu pogudhu 😌
+</p>
 <button onclick="nextPage()">Next 💖</button>`,
 
 `<h1>Un Kooda 💞</h1>
-<p>Ordinary moments kooda,<br>un kooda magical ✨</p>
+<p>
+Ordinary moments kooda,<br>
+un kooda magical ✨
+</p>
 <button onclick="nextPage()">Next 🌹</button>`,
 
 `<h1>My Promise 🤍</h1>
-<p>Un tears-ku shoulder-aa,<br>un dreams-ku support-aa iruppen 🤞💖</p>
+<p>
+Un tears-ku shoulder-aa,<br>
+un dreams-ku support-aa iruppen 🤞💖
+</p>
 <button onclick="nextPage()">Next 💍</button>`,
 
 `<div class="ring">💍</div>
 <h1>Will You Be Mine Forever?</h1>
-<p>Indha life-la,<br>nee mattum thaan en choice ❤️</p>
+<p>
+Indha life-la,<br>
+nee mattum thaan en choice ❤️
+</p>
 <button onclick="yes()">YES ❤️</button>`
 ];
 
@@ -226,22 +226,24 @@ function render() {
 render();
 
 function nextPage() {
-  if (page < pages.length - 1) {
-    page++;
-    render();
-  }
+  page++;
+  render();
 }
 
 function yes() {
   explodeHearts();
   fireworks();
   bigRoseRain();
-  confettiBlast();
 
   document.getElementById("card").innerHTML = `
     <h1>YESSS 😭💖</h1>
-    <div class="forever-text">LOVE YOU FOREVER ♾️❤️</div>
-    <img src="images/forever.jpg" class="final-image">
+
+    <div class="forever-text">
+      LOVE YOU FOREVER ♾️❤️
+    </div>
+
+    <img src="./images/forever.jpg" class="final-image" alt="Forever Love">
+
     <p>
       Nee en today ❤️<br>
       Nee en tomorrow 💕<br>
@@ -253,8 +255,7 @@ function yes() {
 /* Start music on first tap */
 document.getElementById("startScreen").addEventListener("click", () => {
   const music = document.getElementById("bgMusic");
-  music.muted = false;
-  music.play();
+  music.play().catch(()=>{});
   document.getElementById("startScreen").style.display = "none";
 });
 
@@ -267,7 +268,7 @@ setInterval(() => {
   setTimeout(()=>h.remove(),6000);
 }, 250);
 
-/* Effects */
+/* Rose rain */
 function bigRoseRain() {
   for (let i=0;i<30;i++){
     const r=document.createElement("div");
@@ -279,6 +280,7 @@ function bigRoseRain() {
   }
 }
 
+/* Fireworks */
 function fireworks() {
   for (let i=0;i<20;i++){
     const f=document.createElement("div");
@@ -291,6 +293,7 @@ function fireworks() {
   }
 }
 
+/* Heart explosion */
 function explodeHearts() {
   for(let i=0;i<25;i++){
     const h=document.createElement("span");
@@ -301,18 +304,6 @@ function explodeHearts() {
     h.style.transform=`translate(${Math.random()*300-150}px,${Math.random()*300-150}px)`;
     document.body.appendChild(h);
     setTimeout(()=>h.remove(),1500);
-  }
-}
-
-function confettiBlast() {
-  const emojis=["🎉","💖","🌹","✨","💕"];
-  for(let i=0;i<40;i++){
-    const c=document.createElement("div");
-    c.className="confetti";
-    c.innerHTML=emojis[Math.floor(Math.random()*emojis.length)];
-    c.style.left=Math.random()*100+"vw";
-    document.body.appendChild(c);
-    setTimeout(()=>c.remove(),3000);
   }
 }
 </script>
